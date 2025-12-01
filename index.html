@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Quiz</title>
+  <script src = "main.js"></script>
+</head>
+<body>
+  <h1>Quiz</h1> 
+  <select id = "difficulty" name = "difficulty">
+        <option value = "easy">Easy</option>
+        <option value = "medium">Medium</option>
+        <option value = "hard">Hard</option>
+  </select>
+  <select id = "category" name = "category">
+        <option value = 9>General Knowledge</option>
+        <option value = 10>Entertainment: Books</option>
+        <option value = 11>Entertainment: Film</option>
+        <option value = 12>Entertainment: Music</option>
+        <option value = 13>Entertainment: Musicals & Theatres</option>
+        <option value = 14>Entertainment: TV</option>
+        <option value = 15>Entertainment: Video Games</option>
+  </select>
+  <select id = "type" name = "type">
+        <option value = "multiple">MCQ</option>
+        <option value = "boolean">True/False</option>
+    </select>
+
+    <h3 id = "score"></h3>
+    <h3 id = "questionNum"></h3>
+
+
+  <button id = "submit">Submit</button>
+  <div id="quiz"></div>
+
+  <h3 id = "question"></h3>
+  <div id = "container"></div>
+</body>
+</html>
