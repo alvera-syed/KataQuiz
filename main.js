@@ -1,11 +1,21 @@
+// Initialize variables
 let score = 0;
 let questionCount = 0;
 let scoreLabel = null;
 let answered = false; // Prevents double click/double load
 
-let fetchData = async (category, difficulty, type) => {
+/**
+ * Fetches data and creates questions 
+ * @param {*} category - category of question
+ * @param {*} difficulty - difficulty of question
+ * @param {*} type - type of question
+ * @returns void
+ */
+const fetchData = async (category, difficulty, type) => {
+    // Specific url based on params
     let url = `https://opentdb.com/api.php?amount=1&category=${category}&difficulty=${difficulty}&type=${type}`;
 
+    // Fetches json and data
     let response = await fetch(url);
     let data = await response.json();
 
@@ -16,6 +26,7 @@ let fetchData = async (category, difficulty, type) => {
         return;
     }
 
+    // Set json info to variables
     let question = data.results[0].question;
     let answer = data.results[0].correct_answer;
     let incorrectAnswers = data.results[0].incorrect_answers;
@@ -23,11 +34,9 @@ let fetchData = async (category, difficulty, type) => {
     // Reset answered tracker
     answered = false;
 
-    // Display question
+    // Display question + number
     document.getElementById("question").innerHTML = question;
-    // Display question number
     document.getElementById("questionNum").innerText = `Question ${questionCount + 1} of 10`;
-
 
     // Shuffle answers
     let options = [answer, ...incorrectAnswers]
@@ -37,6 +46,9 @@ let fetchData = async (category, difficulty, type) => {
     let container = document.getElementById("container");
     container.innerHTML = "";
 
+    // Creates a radio button as clickable option.
+    // True or false
+    // Or MCQ
     options.forEach(option => {
         let input = document.createElement("input");
         input.type = "radio";
@@ -77,13 +89,19 @@ let fetchData = async (category, difficulty, type) => {
     });
 }
 
-let loadNewQuestion = async () => {
+/**
+ * Creates new question
+ */
+const loadNewQuestion = async () => {
     let category = document.getElementById("category").value;
     let difficulty = document.getElementById("difficulty").value;
     let type = document.getElementById("type").value;
     await fetchData(category, difficulty, type);
 }
 
+/**
+ * Waits for page to load html and js
+ */
 window.onload = () => {
     scoreLabel = document.getElementById("score");
 
