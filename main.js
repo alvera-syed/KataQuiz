@@ -3,6 +3,7 @@ let score = 0;
 let questionCount = 0;
 let scoreLabel = null;
 let answered = false; // Prevents double click/double load
+let seenQuestions = new Set(); // keeps track of past questions
 
 /**
  * Fetches data and creates questions 
@@ -27,9 +28,14 @@ const fetchData = async (category, difficulty, type) => {
     }
 
     // Set json info to variables
-    let question = data.results[0].question;
     let answer = data.results[0].correct_answer;
     let incorrectAnswers = data.results[0].incorrect_answers;
+    let question = data.results[0].question;
+    // If we've seen this question before, fetch a new one
+    if (seenQuestions.has(question)) {
+        return loadNewQuestion(); 
+    }
+    seenQuestions.add(question); // mark as used
 
     // Reset answered tracker
     answered = false;
@@ -57,6 +63,10 @@ const fetchData = async (category, difficulty, type) => {
 
         let label = document.createElement("label");
         label.innerHTML = option;
+
+        // //for css hover coloring
+        // label.textContent = option;
+        // label.classList.add("option");
 
         container.appendChild(input);
         container.appendChild(label);
